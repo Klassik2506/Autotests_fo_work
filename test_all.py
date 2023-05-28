@@ -76,7 +76,6 @@ def test_form_full_reqwest():
     browser.element('.mat-form-field-infix>#emailaddress1').type('aaa@mail.ru')
     browser.element('.mat-form-field-infix>#mcdsoft_children_not_resident_amount').type('0')
     browser.element('.mat-form-field-infix>#dc_snils').type('00000000000')
-    time.sleep(4)
 
     # Гражданство
     browser.execute_script("window.scrollTo(0, 1250);")
@@ -90,9 +89,72 @@ def test_form_full_reqwest():
                            'document.querySelector("#recognition_uploadDocs > form > input[type=file]").style["WebkitTransform"]="translate(0px, 0px) scale(1)";'
                            'document.querySelector("#recognition_uploadDocs > form > input[type=file]").style["msTransform"]="translate(0px, 0px) scale(1)";'
                            'document.querySelector("#recognition_uploadDocs > form > input[type=file]").style["OTransform"]="translate(0px, 0px) scale(1)";')
-    browser.element('.passport_with_title>#recognition_uploadDocs>form>input').send_keys(os.path.join(os.path.abspath('test_photo.jpg')))
-    time.sleep(10)
+    browser.element('.passport_with_title>#recognition_uploadDocs>form>input').send_keys(os.path.join(os.path.abspath(
+        'resources/test_photo.jpg')))
+    browser.execute_script("window.scrollTo(0, 2100);")
+    browser.element('#mcdsoft_actual_doc_number').type('0000000000')
+    browser.element('#mcdsoft_actual_code_org').type('621111')
+    browser.element('#doc_date>.mat-form-field>.mat-form-field-wrapper>.mat-form-field-flex>.mat-form-field-suffix>.mat-datepicker-toggle>.mat-focus-indicator').click()
+    browser.element('[id^=mat-calendar][id*=button]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="2015"]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="июнь 2015"]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="28 июня 2015 г."]').click()
+    browser.element('#birthday>.mat-form-field>.mat-form-field-wrapper>.mat-form-field-flex>.mat-form-field-suffix>.mat-datepicker-toggle>.mat-focus-indicator').click()
+    browser.element('[id^=mat-calendar][id*=button]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="1995"]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="июнь 1995"]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="25 июня 1995 г."]').click()
+    browser.element('#inputField').type('ГУ МВД РОССИИ ПО САРАТОВСКОЙ ОБЛ.')
+    browser.element('#mcdsoft_birth_place').type('Саратов')
+    browser.element('#mat-input-22').type('РОССИЯ')
+    browser.execute_script("window.scrollTo(0, 2800);")
 
+    # Адрес
+    browser.element('#mcdsoft_full_address').type('г Москва, пр-кт Вернадского, д 2')
+    browser.element('[id^=mat-option]>.mat-option-text>.ng-star-inserted').should(have.exact_text('г Москва, пр-кт Вернадского, д 2')).click()
+
+    # Место работы"
+    browser.element('#mcdsoft_employment_type>.mat-select-trigger>[id^=mat-select-value]>.mat-select-value-text').click()
+    browser.element('[id^="mat-option"]>.mat-option-text').should(have.exact_text('По найму')).click()
+    browser.element('#companyname').type('7727004113')
+    browser.element('[id^=mat-option]>.mat-option-text>.ng-star-inserted>.suggestion-title').should(have.exact_text('АО "ЛАНИТ"')).click()
+    browser.element('#mcdsoft_company_address').type('Москва, вн.тер.г. Муниципальный Округ Басманный, ул Доброслободская, д. 5')
+    browser.element('#job_mcdsoft_date_job_placement>.mat-form-field>.mat-form-field-wrapper>.mat-form-field-flex>.mat-form-field-suffix>.mat-datepicker-toggle>.mat-focus-indicator').click()
+    browser.element('[id^=mat-calendar][id*=button]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="2018"]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="май 2018"]').click()
+    browser.element('.mat-calendar-body-cell[aria-label="29 мая 2018 г."]').click()
+    browser.execute_script("window.scrollTo(0, 3200);")
+    browser.element('#jobtitle').type('Директор')
+    browser.element('[id^=mat-autocomplete]>[id^=mat-option]>.mat-option-text>.ng-star-inserted').should(have.exact_text('Директор')).click()
+    browser.element('#job_add_job').click()
+    browser.element('#job_remove_job').click()
+    browser.execute_script("window.scrollTo(0, 3700);")
+
+    # Доходы
+    browser.element('#income_2ndfl').click()
+    browser.execute_script("window.scrollTo(0, 4000);")
+    browser.element('#income_2ndfl_recognition>section>#recognition_uploadDocs>form>input').send_keys(os.path.join(os.path.abspath(
+        'resources/test_photo.jpg')))
+    browser.execute_script("window.scrollTo(0, 4500);")
+    browser.element('#mcdsoft_grey_avg').type('50000')
+    browser.element('#mcdsoft_pension').type('0')
+
+    # Расходы
+
+    # Дополнительные вопросы
+    browser.execute_script("window.scrollTo(0, 5700);")
+    browser.element('#documents-required_approval_recognition>section>#recognition_uploadDocs>form>input').send_keys(
+        os.path.join(os.path.abspath(
+            'resources/test_photo.jpg')))
+    browser.execute_script("window.scrollTo(0, 6000);")
+    browser.element('#documents-required_object_doc_recognition>section>#recognition_uploadDocs>form>input').send_keys(
+        os.path.join(os.path.abspath(
+            'resources/test_photo.jpg')))
+    browser.execute_script("window.scrollTo(0, 6500);")
+    browser.element('#agreement_setConsentTypeWritten').click()
+    browser.element('#uploadAgreementBlank>.mat-raised-button>label').should(have.exact_text('Загрузить'))
+    time.sleep(3)
 
 
 
